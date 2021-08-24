@@ -17,8 +17,8 @@ int main (void)
 
     for (int i = 0; i < NUMBER; i++)
     {
-        people[i].name = get_string("What's the name? ");
-        people[i].number = get_string("What's their number ");
+        people[i].name = get_str("What's the name? ");
+        people[i].number = get_str("What's their number ");
     }
 
         for (int i = 0; i < 2; i++)

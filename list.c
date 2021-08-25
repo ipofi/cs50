@@ -1,49 +1,57 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (void)
+typedef struct node
+{
+    int nummber;
+    struct node *next;
+} node;
+
+int main(void)
 {
 
-/* 
-    int list[3];
+    node *list = NULL;
 
-    list[0] = 1;
-    list[1] = 2;
-    list[3] = 3;
- */
-    int *list = malloc(3 * sizeof(int));
-    if(list == NULL)
+    node *n = malloc(sizeof(node));
+    if(n == NULL)
     {
         return 1;
     }
-    list[0] = 1;
-    list[1] = 2;
-    list[3] = 3;
+    n->nummber = 1;
+    n->next = NULL;
+    list = n;
 
-    int *tmp = realloc(list, 4 * sizeof(int)); //realocates the memory
-    if(tmp == NULL)
+    n = malloc(sizeof(node));
+    if(n == NULL)
     {
         free(list);
         return 1;
     }
 
-    /* 
-    //NOT NEEDED WHEN USING realloc(list, 4* sizeof(int)). It auto copies the data to the new location
-    for (int i = 0; i < 3; i++)
+    n->nummber = 2;
+    n->next = NULL;
+    list->next = n;
+
+    n = malloc(sizeof(node));
+    if(n == NULL)
     {
-        tmp[i] = list[i];
+        free(list->next);
+        free(list);
+        return 1;
     }
- */
-    tmp[3] = 4;
+    n->nummber = 3;
+    n->next = NULL;
+    list->next->next = n;
 
-    free(list);
-
-    list = tmp;
-
-    for (int i = 0; i < 4; i++)
+    for (node *tmp = list; tmp != NULL; tmp = tmp->next)
     {
-        printf("%i\n", list[i]);
+        printf("%i\n", tmp->nummber);
     }
 
-    // free(list);
+    while(list != NULL)
+    {
+        node *tmp = list->next;
+        free(list);
+        list = tmp;
+    }
 }
